@@ -670,7 +670,7 @@ class Side {
         */
         const coefx = puzzle.scalex;
         const coefy = puzzle.scaley;
-        
+
         this.scaledPoints = this.points.map(p => new Point(p.x * coefx, p.y * coefy));
     } //
 
@@ -717,7 +717,7 @@ function twist0(side, ca, cb, howFar = 1) {
 
     let seg1 = new Segment(ca, cb);
     if(howFar < 1){
-        seg1 = new Segment(new Point(howFar * ca.x + (1-howFar) * side.points[0].x, howFar * ca.y + (1-howFar) * side.points[0].y), 
+        seg1 = new Segment(new Point(howFar * ca.x + (1-howFar) * side.points[0].x, howFar * ca.y + (1-howFar) * side.points[0].y),
             new Point(howFar * cb.x + (1-howFar) * side.points[1].x, howFar * cb.y + (1-howFar) * side.points[1].y));
     }
     const mid0 = seg0.pointOnRelative(0.5);
@@ -792,7 +792,7 @@ function twist1(side, ca, cb, howFar = 1) {
 
     let seg1 = new Segment(ca, cb);
     if(howFar < 1){
-        seg1 = new Segment(new Point(howFar * ca.x + (1-howFar) * side.points[0].x, howFar * ca.y + (1-howFar) * side.points[0].y), 
+        seg1 = new Segment(new Point(howFar * ca.x + (1-howFar) * side.points[0].x, howFar * ca.y + (1-howFar) * side.points[0].y),
             new Point(howFar * cb.x + (1-howFar) * side.points[1].x, howFar * cb.y + (1-howFar) * side.points[1].y));
     }
     const mid0 = seg0.pointOnRelative(0.5);
@@ -834,7 +834,7 @@ function twist2(side, ca, cb, howFar = 1) {
 
     let seg1 = new Segment(ca, cb);
     if(howFar < 1){
-        seg1 = new Segment(new Point(howFar * ca.x + (1-howFar) * side.points[0].x, howFar * ca.y + (1-howFar) * side.points[0].y), 
+        seg1 = new Segment(new Point(howFar * ca.x + (1-howFar) * side.points[0].x, howFar * ca.y + (1-howFar) * side.points[0].y),
             new Point(howFar * cb.x + (1-howFar) * side.points[1].x, howFar * cb.y + (1-howFar) * side.points[1].y));
     }
     const mid0 = seg0.pointOnRelative(0.5);
@@ -909,7 +909,7 @@ function rotateVector(x, y, rotations) {
         degree_rotate = rotations * window.rotations;
         rotations = (rotations + num_rots) % num_rots; // Ensure rotations are within 0-3
     }
-    
+
     // Calculate current radius and angle
     const radius = Math.sqrt(x * x + y * y);
     let angle = Math.atan2(-y, x);
@@ -994,7 +994,7 @@ class PolyPiece {
 
                 addIgnoreBouncePiece(min);
                 addIgnoreBouncePiece(max);
-                
+
                 change_savedata_datastorage(max, min, true);
                 // console.log("done merge", max, "to", min);
             }
@@ -1154,7 +1154,7 @@ class PolyPiece {
                             ky-=1/2;
                         }
                         break;
-                    
+
                     case 2: // bottom-left edge
                         if(kx % 2 == 0) {
                             kx++;
@@ -1238,7 +1238,7 @@ class PolyPiece {
                     [ { dkx: 0, dky: 0, edge: 2 }, { dkx: +1, dky: +1/2, edge: 0 } ], // edge 1
                     [ { dkx: 0, dky: 0, edge: 3 }, { dkx: 0, dky: +1, edge: 1 } ], // edge 2
                     [ { dkx: 0, dky: 0, edge: 4 }, { dkx: -1, dky: 1/2, edge: 2 } ], // edge 3
-                    [ { dkx: 0, dky: 0, edge: 5 }, { dkx: -1, dky: -1/2, edge: 3 } ], // edge 4 
+                    [ { dkx: 0, dky: 0, edge: 5 }, { dkx: -1, dky: -1/2, edge: 3 } ], // edge 4
                     [ { dkx: 0, dky: 0, edge: 0 }, { dkx: 0, dky: -1, edge: 4 } ], // edge 5
                 ]
             ];
@@ -1296,13 +1296,13 @@ class PolyPiece {
                 for (tries = 0; tries < toTry.length; tries++) {
                     potNext = toTry[tries];
                     edgeNumber = edgeIsInTbEdges(currEdge.kx + potNext.dkx, currEdge.ky + potNext.dky, potNext.edge);
-                    
+
                     if (edgeNumber === false) continue; // can't here
                     // new element in loop
                     currEdge = tbEdges[edgeNumber];     // new current edge
                     lp.push(currEdge);              // add it to loop
                     tbEdges.splice(edgeNumber, 1);  // remove from list of available sides
-                    
+
                     break; // stop tries !
                 } // for tries
                 if (edgeNumber === false) break; // loop is closed
@@ -1365,12 +1365,12 @@ class PolyPiece {
         let desty = ( (this.pckymin ? 0 : 1 / 2) ) * puzzle.scaley;
 
         // console.log(this, puzzle)
-        
+
         if(this.pieces[0].index < 0){
             if(apnx > 1){
                 if(this.pckxmin == 0){
                     srcx += puzzle.scalex * (1+(this.pckymin)%2) / 3;
-                } else { // if(this.pckxmin == this.apnx - 1){            
+                } else { // if(this.pckxmin == this.apnx - 1){
                     srcx -= puzzle.scalex * (1+(this.pckymin)%2) / 3;
                 }
             }
@@ -1838,7 +1838,7 @@ class Puzzle {
             for (let ind of groups[key]) {
                 let w = (ind-1) % window.apnx;
                 let h = Math.floor((ind-1) / window.apnx);
-                
+
                 if(ind < 0){
                     w = -ind;
                     h = -1;
@@ -1855,7 +1855,7 @@ class Puzzle {
                 ppp.hasMovedEver = hasmoved[key];
                 ppp.unlocked = unlocked[key];
                 ppp.moveTo(
-                    coordinates[key][0] * puzzle.contWidth, 
+                    coordinates[key][0] * puzzle.contWidth,
                     coordinates[key][1] * puzzle.contHeight
                 )
                 if(coordinates[key][2]){
@@ -2016,7 +2016,7 @@ class Puzzle {
         } // for ky
     }
 
-    
+
     corners_and_sides_6(shapeDesc, shapeVal) {
 
         let { coeffDecentr, twistf } = shapeDesc;
@@ -2126,7 +2126,7 @@ class Puzzle {
                         twistf(np.sides[3], corners[idy3-1][idx3], corners[idy4-1][idx4]);
                     } else {
                         twistf(np.sides[3], corners[idy3+1][idx3], corners[idy4+1][idx4]);
-                    }   
+                    }
                 }
 
                 // bottom-left side
@@ -2137,7 +2137,7 @@ class Puzzle {
                         np.sides[4] = this.pieces[ky][kx - 1].sides[1].reversed();
                     } else {
                         np.sides[4] = this.pieces[ky + 1][kx - 1].sides[1].reversed();
-                    }  
+                    }
                 }
 
                 // top-left side
@@ -2291,13 +2291,13 @@ class Puzzle {
         this._gifDraw = this.drawParams;
 
         this.renderSourceToGameCanvas(this.srcImage);
-        
+
 
         this.gameCanvas.classList.add("gameCanvas");
         this.gameCanvas.style.zIndex = 100000002;
 
- 
-        
+
+
 
         if (Array.isArray(this.pieces)) {
             this.pieces.forEach(row => {
@@ -2399,7 +2399,7 @@ class Puzzle {
         return this.screenToPuzzle(event.clientX, event.clientY);
     } // Puzzle.relativeMouseCoordinates
 
-    
+
 
     evaluateZIndex() {
         if (!Array.isArray(this.polyPieces) || this.polyPieces.length === 0) {
@@ -2432,7 +2432,7 @@ class Puzzle {
 
     renderSourceToGameCanvas(sourceOverride = null) {
         if (!this.gameCtx || !this._gifDraw) return;
-      
+
         const { sx, sy, sw, sh, dx, dy, dw, dh, sourceW, sourceH } = this._gifDraw;
         const source = sourceOverride || this.srcImage;
         if (!source) return;
@@ -2467,7 +2467,7 @@ class Puzzle {
         this._lastMediaFrameMs = nowMs || 0;
         return true;
       }
-      
+
 } // class Puzzle
 //-----------------------------------------------------------------------------
 
@@ -2973,7 +2973,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
             applyViewTransform();
             return;
         }
-        
+
         // resize event
         if (event && event.event == "resize") {
 
@@ -3007,7 +3007,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                 });
                 if (rendererFacade && rendererFacade.sceneState) rendererFacade.sceneState.markAllDirty();
             }
-            
+
             puzzle.prevWidth = puzzle.contWidth;
             puzzle.prevHeight = puzzle.contHeight;
 
@@ -3025,7 +3025,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
         switch (state) {
             /* initialisation */
             case 0:
-                
+
                 if((window.is_connected || window.play_solo) && window.set_ap_image && window.choose_ap_image){
                     state = 10;
                 }else{
@@ -3047,8 +3047,8 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                     // display centered initial image
                     loadImageFunction();
                     return;
-                } 
-                
+                }
+
                 if ((event && event.event == "nbpieces") || (window.LoginStart && window.is_connected) || (window.start_solo_immediately)) {
                     if (!puzzle.imageLoaded || !(puzzle.srcImage.naturalWidth > 0) || !(puzzle.srcImage.naturalHeight > 0)) {
                         document.getElementById("m4").textContent = "Loading image...";
@@ -3104,17 +3104,17 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                     state = 52;
                     break;
                 }
-                
+
                 return;
 
-            
+
             case 17: // load save!
 
                 if(unlocked_pieces.length == 0){
                     console.log("No unlocked pieces!")
                     return;
                 }
-                
+
                 state = 18;
                 accept_pending_actions = true;
 
@@ -3124,7 +3124,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                     window.save_file = {};
                     if(!window.play_solo){
                         let keys = [];
-                
+
                         for (let p = 1; p <= apnx * apny; p++) {
                             keys.push(`JIG_PROG_${window.slot}_${p}`);
                         }
@@ -3134,7 +3134,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                             }
                         }
 
-                        let client = window.getAPClient();                  
+                        let client = window.getAPClient();
 
                         await client.storage.notify(keys, (key, value, oldValue) => {
                             console.log("notify", key, value, oldValue);
@@ -3146,7 +3146,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
 
                         let results = (await client.storage.fetch(keys, true))
                         console.log("results", results)
-                        
+
                         for (let [key, value] of Object.entries(results)) {
                             let spl = key.split("_")[3];
                             if (spl === "O"){
@@ -3166,7 +3166,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                                     }
                                 }
                             }
-                            
+
                         }
                     }
 
@@ -3181,11 +3181,11 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                             }else{
                                 random_rotation = Math.floor(((index+10) * 2345.1234) % num_rots);
                             }
-                            window.save_file[index] = 
+                            window.save_file[index] =
                             [
                                 [
-                                    ((index+1000) * 4321.1234) % 0.10, 
-                                    ((index+1000) * 1234.4321) % 0.5, 
+                                    ((index+1000) * 4321.1234) % 0.10,
+                                    ((index+1000) * 1234.4321) % 0.5,
                                     random_rotation
                                 ], false
                             ];
@@ -3200,17 +3200,17 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                             }else{
                                 random_rotation = Math.floor(((index+10) * 2345.1234) % num_rots);
                             }
-                            window.save_file[index] = 
+                            window.save_file[index] =
                             [
                                 [
-                                    ((index+1000) * 4321.1234) % 0.10, 
-                                    ((index+1000) * 1234.4321) % 0.5, 
+                                    ((index+1000) * 4321.1234) % 0.10,
+                                    ((index+1000) * 1234.4321) % 0.5,
                                     random_rotation
                                 ], false
                             ];
                         }
                     });
-                    
+
                     state = 19;
                 }
             case 18: // wait for save file
@@ -3299,7 +3299,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                 puzzle_ini = true;
 
                 console.log("done getting backlog of actions")
-                
+
                 puzzle.puzzle_scale();
                 if (rendererFacade) maybeOnResize(puzzle, rendererFacade);
                 let downgradedAtStart = false;
@@ -3371,7 +3371,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
 
             case 25: // spread pieces
                 puzzle.gameCanvas.style.display = "none"; // hide reference image
-                
+
                 state = 40;
                 break;
 
@@ -3400,21 +3400,21 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                     if (moving && moving.pp) setHeldPieceState(moving.pp, false);
                     setMovingState(null);
                 }
-                
+
                 if (event.event != "touch") return;
 
                 if(event.button == 0){
                     const event_x = event.position.x;
                     const event_y = event.position.y;
                     // console.log(event_x, event_y)
-    
+
                     setMovingState({
                         xMouseInit: event_x,
                         yMouseInit: event_y,
                         xMouse: event_x,
                         yMouse: event_y
                     });
-    
+
                     /* evaluates if contact inside a PolyPiece, by decreasing z-index */
                     const acquireStartedAt = jigsawPerfNow();
                     const hitPiece = rendererFacade
@@ -3431,7 +3431,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                         if (perfMonitor && typeof perfMonitor.beginPickup === "function") {
                             perfMonitor.beginPickup(jigsawPerfNow());
                         }
-                        
+
                         puzzle._releaseHandled = true;
                         state = 55;
                         return;
@@ -3477,7 +3477,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                     return;
                 }
 
-                
+
                 switch (event.event) {
                     case "move":
                         applyPieceMoveEvent(event, perfMonitor);
@@ -3498,7 +3498,7 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                             if (m.ifNear(pp)) { // a match !
                                 if (pp.pieces.length > moving.pp.pieces.length || (pp.pieces.length == moving.pp.pieces.length && pp.pieces[0].index > moving.pp.pieces[0].index)) {
                                     pp.merge(moving.pp);
-                                    moving.pp = pp; 
+                                    moving.pp = pp;
                                     setHeldPieceState(moving.pp, true);
                                 } else {
                                     moving.pp.merge(pp);
@@ -3513,8 +3513,8 @@ document.addEventListener("gestureend", preventZoomWhileHoldingPiece, { passive:
                                 if (movingSyncId !== null) change_savedata_datastorage(movingSyncId, [moving.pp.x / puzzle.contWidth, moving.pp.y / puzzle.contHeight], true);
                             }else{
                                 if (movingSyncId !== null) change_savedata_datastorage(movingSyncId, [moving.pp.x / puzzle.contWidth, moving.pp.y / puzzle.contHeight, moving.pp.rot], true);
-                            }    
-                            
+                            }
+
                             if (movingSyncId !== null) addIgnoreBouncePiece(movingSyncId);
                         }
 
@@ -3771,11 +3771,11 @@ document.getElementById("m5").addEventListener("click", () => {
     window.open('credits.html', '_blank');
 });
 
-document.getElementById("m13").addEventListener("click", () => {  
+document.getElementById("m13").addEventListener("click", () => {
     askForHint(false);
 });
 let hint_color = "red";
-document.getElementById("m13b").addEventListener("click", () => {  
+document.getElementById("m13b").addEventListener("click", () => {
     if(hint_color == "red"){
         hint_color = "green";
         document.getElementById("m13b").style.backgroundColor = "#00ff00";
@@ -3787,7 +3787,7 @@ document.getElementById("m13b").addEventListener("click", () => {
         document.getElementById("m13b").style.backgroundColor = "#ff0000";
     }
 });
-document.getElementById("m13c").addEventListener("click", () => {  
+document.getElementById("m13c").addEventListener("click", () => {
     removeAllHints();
 });
 
@@ -4130,7 +4130,7 @@ function unlockFakePiece() {
     let index = - unlocked_fake_pieces.length - 1;
     unlocked_fake_pieces.push(index);
     console.log("unlock fake piece", index)
-    
+
     if(process_pending_actions){
         let pp = findPolyPieceUsingPuzzlePiece(index);
         console.log(pp)
@@ -4166,7 +4166,7 @@ function doSwapTrap(){
         const pp2Sync = getPolyPieceSyncId(pp2);
         if (pp1Sync !== null) change_savedata_datastorage(pp1Sync, [pp1.x / puzzle.contWidth, pp1.y / puzzle.contHeight, pp1.rot], true);
         if (pp2Sync !== null) change_savedata_datastorage(pp2Sync, [pp2.x / puzzle.contWidth, pp2.y / puzzle.contHeight, pp2.rot], true);
-    }   
+    }
 }
 function doRotateTrap(){
     let pps = getRandomPiece(1, 10);
@@ -4222,11 +4222,11 @@ var mergedKeys = [];
 function newMerge(key, playSound = true){
     if (mergedKeys.includes(key)) return;
     mergedKeys.push(key);
-    
+
     let newRecord = false;
-    
+
     numberOfMerges += 1;
-    
+
     if(numberOfMerges > numberOfMergesAtStart){
         window.sendCheck(numberOfMerges);
         // console.log("Send check for", numberOfMerges)
@@ -4235,7 +4235,7 @@ function newMerge(key, playSound = true){
         }
         newRecord = true;
     }
-        
+
     if(newRecord){
         change_savedata_datastorage("M", numberOfMerges, true);
     }
@@ -4388,7 +4388,7 @@ function askForHint(alsoConnect = false){
             if (!pp2.unlocked) continue;
             if (pp1.pieces[0].index < 0) continue;
             if (pp2.pieces[0].index < 0) continue;
-            
+
             if (pp1.ifNear(pp2, true, true)) { // a match !
                 console.log("MATCH FOUND!", pp1, pp2);
                 if(!alsoConnect){
@@ -4446,7 +4446,7 @@ function rotateCurrentPiece(counter = false){
         const movingSyncId = getPolyPieceSyncId(moving.pp);
         if (movingSyncId !== null) change_savedata_datastorage(movingSyncId, [moving.pp.x / puzzle.contWidth, moving.pp.y / puzzle.contHeight, moving.pp.rot], false);
     }
-    
+
 }
 
 document.addEventListener('keydown', function(event) {
@@ -4488,7 +4488,7 @@ function withdraw(numToWithdraw){
                 pcsStoredSpan.style.fontWeight = "bold";
             }
         }
-        
+
     }
 }
 
@@ -4569,7 +4569,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (pcsStoredSpan) {
                 let am = puzzle.polyPieces.filter(pp => !pp.hasMovedEver && pp.unlocked && pp.withdrawn).length
                 pcsStoredSpan.textContent = am;
-                
+
                 if (am == 0) {
                     // Hide the control button with id "control-btn3a"
                     const btn = document.getElementById('control-btn3a');
@@ -4582,5 +4582,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    
+
 });
