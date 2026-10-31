@@ -2195,10 +2195,10 @@ class Puzzle {
         /* store logical size before cap so display scale stays constant when only resolution preset changes */
         this._logicalGameWidth = this.gameWidth;
         this._logicalGameHeight = this.gameHeight;
-        /* cap internal resolution by puzzle resolution preset (same as render buffer cap) */
-        if (typeof getPuzzleResolution === "function" && typeof window.JigsawGetPuzzleResolutionMaxDimensions === "function") {
+        /* cap internal resolution by puzzle render buffer cap */
+        if (typeof getPuzzleResolution === "function" && typeof window.JigsawGetPuzzleBufferMaxDimensions === "function") {
             const preset = getPuzzleResolution();
-            const max = window.JigsawGetPuzzleResolutionMaxDimensions(preset);
+            const max = window.JigsawGetPuzzleBufferMaxDimensions(preset);
             if (max && max.maxW > 0 && max.maxH > 0) {
                 const scale = Math.min(max.maxW / this.gameWidth, max.maxH / this.gameHeight, 1);
                 this.gameWidth = mmax(1, Math.round(this.gameWidth * scale));
@@ -2321,9 +2321,9 @@ class Puzzle {
         if (!this.srcImage) return;
         let w = this._logicalGameWidth;
         let h = this._logicalGameHeight;
-        if (typeof getPuzzleResolution === "function" && typeof window.JigsawGetPuzzleResolutionMaxDimensions === "function") {
+        if (typeof getPuzzleResolution === "function" && typeof window.JigsawGetPuzzleBufferMaxDimensions === "function") {
             const preset = getPuzzleResolution();
-            const max = window.JigsawGetPuzzleResolutionMaxDimensions(preset);
+            const max = window.JigsawGetPuzzleBufferMaxDimensions(preset);
             if (max && max.maxW > 0 && max.maxH > 0) {
                 const scale = Math.min(max.maxW / w, max.maxH / h, 1);
                 w = mmax(1, Math.round(w * scale));

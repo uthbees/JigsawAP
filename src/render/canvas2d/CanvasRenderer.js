@@ -42,9 +42,16 @@
         }
 
         _isOverlayOversampleEnabled() {
-            if (typeof window === "undefined" || typeof window.getPuzzleResolution !== "function") return false;
-            const preset = window.getPuzzleResolution();
-            return preset === "1080p" || preset === "1440p" || preset === "4k" || preset === "8k" || preset === "16k";
+            // Oversampling can cause performance problems and seems to have no benefit. Plus, the buffer is scaled
+            // up as a whole now, which should do what oversampling was supposed to. Oversampling is left in for easy
+            // reversion, but permanently disabled.
+            // Details on the performance problems (in the AP server):
+            // https://discord.com/channels/731205301247803413/1409148531637489775/1565583561854025832
+            return false;
+
+            // if (typeof window === "undefined" || typeof window.getPuzzleResolution !== "function") return false;
+            // const preset = window.getPuzzleResolution();
+            // return preset === "1080p" || preset === "1440p" || preset === "4k" || preset === "8k" || preset === "16k";
         }
 
         _shouldUseOverlayOversample(pp, isAnimatedMedia) {

@@ -1,22 +1,42 @@
 "use strict";
 
 (function initRendererFacade(globalScope) {
+    const MAX_PUZZLE_DIMENSIONS = {
+        "16k": { maxW: 15360, maxH: 8640 },
+        "8k": { maxW: 7680, maxH: 4320 },
+        "4k": { maxW: 3840, maxH: 2160 },
+        "1440p": { maxW: 2560, maxH: 1440 },
+        "1080p": { maxW: 1920, maxH: 1080 },
+        "720p": { maxW: 1280, maxH: 720 },
+        "540p": { maxW: 960, maxH: 540 }
+    };
+    // The amount to scale up the buffer so that the puzzle will still look nice when zoomed in.
+    // Higher values look prettier but are more expensive.
+    const BUFFER_SCALE_FACTOR = 3;
+    // Chrome seems to have a graphics bug triggered under very specific conditions causing extreme performance
+    // degradation. With a normal scale factor of 3, we can avoid triggering this bug by using a slightly larger
+    // scale factor for the 1080p preset.
+    const CHROME_1080P_SCALE_FACTOR_OVERRIDE = 4;
+
     /** Returns max width/height for a resolution preset. Used by RendererFacade and puzzle_scale(). */
-    function getPuzzleResolutionMaxDimensions(preset) {
-        if (!preset || preset === "native") return null;
-        switch (preset) {
-            case "16k": return { maxW: 15360, maxH: 8640 };
-            case "8k": return { maxW: 7680, maxH: 4320 };
-            case "4k": return { maxW: 3840, maxH: 2160 };
-            case "1440p": return { maxW: 2560, maxH: 1440 };
-            case "1080p": return { maxW: 1920, maxH: 1080 };
-            case "720p": return { maxW: 1280, maxH: 720 };
-            case "540p": return { maxW: 960, maxH: 540 };
-            default: return null;
+    function getPuzzleBufferMaxDimensions(preset) {
+        if (preset === '540p') {
+            // If you're using 540p resolution, you probably need all the performance you can get, so we skip upscaling.
+            return MAX_PUZZLE_DIMENSIONS[preset];
+        }
+
+        const finalScaleFactor = preset === '1080p' && !!window.chrome
+            ? CHROME_1080P_SCALE_FACTOR_OVERRIDE
+            : BUFFER_SCALE_FACTOR;
+        if (preset in MAX_PUZZLE_DIMENSIONS) {
+            let base = MAX_PUZZLE_DIMENSIONS[preset];
+            return { maxW: base.maxW * finalScaleFactor, maxH: base.maxH * finalScaleFactor };
+        } else {
+            return null;
         }
     }
 
-    globalScope.JigsawGetPuzzleResolutionMaxDimensions = getPuzzleResolutionMaxDimensions;
+    globalScope.JigsawGetPuzzleBufferMaxDimensions = getPuzzleBufferMaxDimensions;
 
     class RendererFacade {
         constructor({ container, config, getPuzzleResolution }) {
@@ -301,11 +321,11 @@
             return source;
         }
 
-        _computeCappedResolution(width, height, preset) {
+        _computeCappedBufferResolution(width, height, preset) {
             if (!preset || preset === "native" || width <= 0 || height <= 0) {
                 return { cappedW: Math.max(1, Math.round(width)), cappedH: Math.max(1, Math.round(height)) };
             }
-            const max = getPuzzleResolutionMaxDimensions(preset);
+            const max = getPuzzleBufferMaxDimensions(preset);
             if (!max) {
                 return { cappedW: Math.max(1, Math.round(width)), cappedH: Math.max(1, Math.round(height)) };
             }
@@ -318,7 +338,7 @@
 
         onResize(width, height) {
             const preset = this.getPuzzleResolution();
-            const { cappedW, cappedH } = this._computeCappedResolution(width, height, preset);
+            const { cappedW, cappedH } = this._computeCappedBufferResolution(width, height, preset);
             const displayW = Math.max(1, Math.round(width));
             const displayH = Math.max(1, Math.round(height));
             if (this.canvasRenderer) this.canvasRenderer.resize(cappedW, cappedH, displayW, displayH);
